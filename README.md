@@ -130,7 +130,7 @@ Queries if the amplifier is enabled.
 |||
 |-|-|
 |Command|`isENABLE\n`|
-|Returns|`TRUE\n | FALSE\n`|
+|Returns|`TRUE\n` or `FALSE\n`|
 
 **Example** 
 
@@ -144,7 +144,7 @@ Queries if phase tacking is enabled.
 |||
 |-|-|
 |Command|`isPHASE\n`|
-|Returns|`TRUE\n | FALSE\n`|
+|Returns|`TRUE\n` or `FALSE\n`|
 
 **Example** 
 
@@ -158,7 +158,7 @@ Queries if power tacking is enabled.
 |||
 |-|-|
 |Command|`isPOWER\n`|
-|Returns|`TRUE\n | FALSE\n`|
+|Returns|`TRUE\n` or `FALSE\n`|
 
 **Example** 
 
