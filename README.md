@@ -39,6 +39,7 @@ wait: 100 ms
 send: `isENABLE\n`
 
 Check response.
+____
 ### **Enable Phase Tracking**
 Enables phase tacking.
 
@@ -167,7 +168,7 @@ send: `isPOWER\n`
 receive: `TRUE\n`
 ____
 
-## Set Control Parameter Commands
+## Set Control Parameters
 ### **Set Output Voltage**
 Sets the amplifier output voltage. 
 
@@ -342,7 +343,7 @@ send: `getPOWERGAIN\n`
 
 Check response.
 ___
-## Get Control Parameter Commands
+## Get Control Parameters
 ### **Get Output Voltage**
 Returns the set amplifier output voltage. 
 
