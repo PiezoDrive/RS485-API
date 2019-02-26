@@ -344,6 +344,7 @@ Check response.
 ## Get Control Parameter Commands
 ### **Get Output Voltage**
 Returns the set amplifier output voltage. 
+
 |||
 |-|-|
 |Command|`getVOLT\n`|
@@ -356,6 +357,7 @@ receive: `100\n`
 ____
 ### **Get Output Frequency**
 Returns the set amplifier output frequency. 
+
 |||
 |-|-|
 |Command|`getFREQ\n`|
@@ -369,6 +371,7 @@ receive: `80000\n`
 ____
 ### **Get Maximum Frequency**
 Returns the set amplifier maximum output frequency. 
+
 |||
 |-|-|
 |Command|`getMAXFREQ\n`|
@@ -381,7 +384,8 @@ send: `getMAXFREQ\n`
 receive: `90000\n`
 ____
 ### **Get Minimum Frequency**
-Returns the set amplifier minimum output frequency. 
+Returns the set amplifier minimum output frequency.
+
 |||
 |-|-|
 |Command|`getMINFREQ\n`|
@@ -394,7 +398,8 @@ send: `getMINFREQ\n`
 receive: `70000\n`
 ____
 ### **Get Target Phase**
-Returns the set target phase. 
+Returns the set target phase.
+
 |||
 |-|-|
 |Command|`getPHASE\n`|
@@ -408,6 +413,7 @@ receive: `-10\n`
 ____
 ### **Get Maximum Load Power**
 Returns the set maximum load power. 
+
 |||
 |-|-|
 |Command|`getMAXLPOW\n`|
@@ -421,6 +427,7 @@ receive: `100000\n`
 ____
 ### **Get Target Load Power**
 Returns the set target load power. 
+
 |||
 |-|-|
 |Command|`getTARPOW\n`|
@@ -434,6 +441,7 @@ receive: `90000\n`
 ____
 ### **Get Phase Gain**
 Returns the set phase tracking control gain. 
+
 |||
 |-|-|
 |Command|`getPHASEGAIN\n`|
@@ -447,6 +455,7 @@ receive: `1000\n`
 ____
 ### **Get Power Gain**
 Returns the set power tracking control gain. 
+
 |||
 |-|-|
 |Command|`getPOWERGAIN\n`|
@@ -462,6 +471,7 @@ ____
 ## Read Measured Values
 ### Read Measured Phase
 Returns the measured phase.
+
 |||
 |-|-|
 |Command|`readPHASE\n`|
@@ -475,6 +485,7 @@ receive: `11\n`
 
 ### Read Measured Impedance
 Returns the measured impedance.
+
 |||
 |-|-|
 |Command|`readIMP\n`|
@@ -488,6 +499,7 @@ receive: `220\n`
 ____
 ### Read Load Power
 Returns the measured load power.
+
 |||
 |-|-|
 |Command|`readLPOW\n`|
@@ -502,6 +514,7 @@ receive: `91230\n`
 ____
 ### Read Amplifier Power
 Returns the measured amount of power dissipated via the amplifier.
+
 |||
 |-|-|
 |Command|`readAPOW\n`|
@@ -515,6 +528,7 @@ receive: `111230\n`
 ___
 ### Read Amplifier Temperature
 Returns the measured amplifier temperature.
+
 |||
 |-|-|
 |Command|`readTEMP\n`|
@@ -540,6 +554,7 @@ ____
 ### Load Overload Error
 
 Error will occurs when measured load power exceeds the set load power value. Is sent 10 times at 100 ms intervals to insure it is received. Is reset via the enable amplifier command. 
+
 |||
 |-|-|
 |Message|`LPERR\n`|
@@ -556,6 +571,7 @@ send: `ENABLE\n`
 ### Amplifier Overload Error
 
 Error will occurs when measured amplifier dissipation power exceeds set value. Is sent 10 times at 100 ms intervals to insure it is received. Is reset via the enable amplifier command. 
+
 |||
 |-|-|
 |Message|`APERR\n`|
