@@ -167,9 +167,6 @@ send: `isPOWER\n`
 receive: `TRUE\n`
 ____
 
-
-
-
 ## Set Control Parameter Commands
 ### **Set Output Voltage**
 Sets the amplifier output voltage. 
@@ -265,6 +262,8 @@ wait: 100 ms
 send: `getPHASE\n`
 
 Check response.
+___
+
 ### **Set Maximum Load Power**
 Sets the maximum power applied to the load.
 
@@ -283,6 +282,8 @@ wait: 100 ms
 send: `getMAXLPOW\n`
 
 Check response.
+___
+
 ### **Set Target Power**
 Sets the target power applied to the load.
 
@@ -301,6 +302,8 @@ wait: 100 ms
 send: `getTARPOW\n`
 
 Check response.
+___
+
 ### **Set Phase Gain**
 Sets the control gain used for phase tracking.
 
@@ -319,6 +322,7 @@ wait: 100 ms
 send: `getPHASEGAIN\n`
 
 Check response.
+___
 ### **Set Power Gain**
 Sets the control gain used for power tracking.
 
@@ -337,10 +341,7 @@ wait: 100 ms
 send: `getPOWERGAIN\n`
 
 Check response.
-
-
-
-
+___
 ## Get Control Parameter Commands
 ### **Get Output Voltage**
 Returns the set amplifier output voltage. 
@@ -482,7 +483,7 @@ Returns the measured phase.
 send: `readPHASE\n`
 
 receive: `11\n`
-
+___
 ### Read Measured Impedance
 Returns the measured impedance.
 
@@ -510,7 +511,6 @@ Returns the measured load power.
 send: `readLPOW\n`
 
 receive: `91230\n`
-
 ____
 ### Read Amplifier Power
 Returns the measured amount of power dissipated via the amplifier.
@@ -567,7 +567,7 @@ receive: `LPERR\n`
 wait: 2 s 
 
 send: `ENABLE\n`
-
+____
 ### Amplifier Overload Error
 
 Error will occurs when measured amplifier dissipation power exceeds set value. Is sent 10 times at 100 ms intervals to insure it is received. Is reset via the enable amplifier command. 
@@ -584,10 +584,11 @@ receive: `APERR\n`
 wait: 2 s 
 
 send: `ENABLE\n`
-
+___
 ### Amplifier Temperature Error
 
 Error will occurs when measured amplifier temperature exceeds set value. Is sent 10 times at 100 ms intervals to insure it is received. Is reset via the enable amplifier command. 
+
 |||
 |-|-|
 |Message|`ATERR\n`|
