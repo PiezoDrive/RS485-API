@@ -1,4 +1,4 @@
-# RS485 API for PiezoDrive PDus210
+# RS485 API for PiezoDrive PDUS210
 
 All commands and returns will use `\n` as a termination key. 
 
@@ -41,12 +41,12 @@ send: `isENABLE\n`
 Check response.
 ____
 ### **Enable Phase Tracking**
-Enables phase tacking.
+Enables phase tracking.
 
 |||
 |-|-|
 |Command|`enPHASE\n`| 
-|Notes|No return is given if phase tacking is not enabled, use the **Is Phase Tracking** command to check.|
+|Notes|No return is given if phase tracking is not enabled, use the **Is Phase Tracking** command to check.|
 
 **Example** 
 
@@ -59,12 +59,12 @@ send: `isPHASE\n`
 Check response.
 ____
 ### **Disable Phase Tracking**
-Disables phase tacking.
+Disables phase tracking.
 
 |||
 |-|-|
 |Command|`disPHASE\n`| 
-|Notes|No return is given if phase tacking is not disabled, use the **Is Phase Tracking** command to check.|
+|Notes|No return is given if phase tracking is not disabled, use the **Is Phase Tracking** command to check.|
 
 **Example** 
 
@@ -77,12 +77,12 @@ send: `isPHASE\n`
 Check response.
 ____
 ### **Enable Power Tracking**
-Enable power tacking.
+Enable power tracking.
 
 |||
 |-|-|
 |Command|`enPOWER\n`| 
-|Notes|No return is given if power tacking is not enabled, use the **Is Power Tracking** command to check.|
+|Notes|No return is given if power tracking is not enabled, use the **Is Power Tracking** command to check.|
 
 **Example** 
 
@@ -95,12 +95,12 @@ send: `isPOWER\n`
 Check response.
 ____
 ### **Disable Power Tracking**
-Disable power tacking.
+Disable power tracking.
 
 |||
 |-|-|
 |Command|`disPOWER\n`| 
-|Notes|No return is given if power tacking is not disabled, use the **Is Power Tracking** command to check.|
+|Notes|No return is given if power tracking is not disabled, use the **Is Power Tracking** command to check.|
 
 **Example** 
 
@@ -153,8 +153,8 @@ send: `isPHASE\n`
 
 receive: `TRUE\n`
 ____
-### **Is Power Tacking**
-Queries if power tacking is enabled.
+### **Is Power Tracking**
+Queries if power tracking is enabled.
 
 |||
 |-|-|
