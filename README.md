@@ -9,7 +9,7 @@ Enables the amplifier output.
 |||
 |-|-|
 |Command|`ENABLE\n`|
-|Notes|No return is given if amplifier will not enable, use the is enabled command to check. Clears overload errors.|
+|Notes|No return is given if amplifier will not enable, use the **Is Enabled** command to check. Clears overload errors.|
 
 **Example** 
 
@@ -28,7 +28,7 @@ Disable the amplifier output.
 |||
 |-|-|
 |Command|`DISABLE\n`|
-|Notes|No return is given if amplifier will not disable, use the is enabled command to check.|
+|Notes|No return is given if amplifier will not disable, use the **Is Enabled** command to check.|
 
 **Example** 
 
@@ -46,7 +46,7 @@ Enables phase tacking.
 |||
 |-|-|
 |Command|`enPHASE\n`| 
-|Notes|No return is given if phase tacking is not enabled, use the is phase tracking command to check.|
+|Notes|No return is given if phase tacking is not enabled, use the **Is Phase Tracking** command to check.|
 
 **Example** 
 
@@ -64,7 +64,7 @@ Disables phase tacking.
 |||
 |-|-|
 |Command|`disPHASE\n`| 
-|Notes|No return is given if phase tacking is not disabled, use the is phase tracking command to check.|
+|Notes|No return is given if phase tacking is not disabled, use the **Is Phase Tracking** command to check.|
 
 **Example** 
 
@@ -82,7 +82,7 @@ Enable power tacking.
 |||
 |-|-|
 |Command|`enPOWER\n`| 
-|Notes|No return is given if power tacking is not enabled, use the is power tracking command to check.|
+|Notes|No return is given if power tacking is not enabled, use the **Is Power Tracking** command to check.|
 
 **Example** 
 
@@ -100,7 +100,7 @@ Disable power tacking.
 |||
 |-|-|
 |Command|`disPOWER\n`| 
-|Notes|No return is given if power tacking is not disabled, use the is power tracking command to check.|
+|Notes|No return is given if power tacking is not disabled, use the **Is Power Tracking** command to check.|
 
 **Example** 
 
@@ -139,8 +139,8 @@ send: `isENABLE\n`
 
 receive: `TRUE\n`
 ____
-### **Is Phase Tacking**
-Queries if phase tacking is enabled.
+### **Is Phase Tracking**
+Queries if phase tracking is enabled.
 
 |||
 |-|-|
@@ -175,8 +175,8 @@ Sets the amplifier output voltage.
 |||
 |-|-|
 |Command|`setVOLT[voltage]\n`|
-|Required| voltage=[integer], peak to peak voltage in volts|
-|Notes|No return is given if amplifier voltage is not set, use the get voltage command to check. Will not update if power tracking is enabled.|
+|Required| Voltage=[integer], peak to peak voltage in volts|
+|Notes|No return is given if amplifier voltage is not set, use the **Get Output Voltage** command to check. **Note** Output voltage can't be changed while power tracking is enabled.|
 
 **Example** 
 
@@ -194,8 +194,8 @@ Sets the amplifier output frequency.
 |||
 |-|-|
 |Command|`setFREQ[frequency]\n`|
-|Required| frequency=[integer], frequency in hertz|
-|Notes|No return is given if amplifier frequency is not set, use the get frequency command to check. Will not update if phase tracking is enabled.|
+|Required| Frequency=[integer], frequency in Hz|
+|Notes|No return is given if amplifier frequency is not set, use the **Get Output Frequency** command to check. Will not update if phase tracking is enabled.|
 
 **Example** 
 
@@ -213,8 +213,8 @@ Sets the amplifier maximum output frequency.
 |||
 |-|-|
 |Command|`setMAXFREQ[frequency]\n`|
-|Required| frequency=[integer], frequency in hertz|
-|Notes|No return is given if amplifier maximum frequency is not set, use the get maximum frequency command to check. Will limit the range of the frequency used for phase tracking.|
+|Required| Frequency=[integer], frequency in Hz|
+|Notes|No return is given if amplifier maximum frequency is not set, use the **Get Maximum Frequency** command to check. Will limit the range of the frequency used for phase tracking.|
 
 **Example** 
 
@@ -232,8 +232,8 @@ Sets the amplifier minimum output frequency.
 |||
 |-|-|
 |Command|`setMINFREQ[frequency]\n`|
-|Required| frequency=[integer], frequency in hertz|
-|Notes|No return is given if amplifier minimum frequency is not set, use the get minimum frequency command to check. Will limit the range of the frequency used for phase tracking.|
+|Required| Frequency=[integer], frequency in Hz|
+|Notes|No return is given if amplifier minimum frequency is not set, use the **Get Minimum Frequency** command to check. Will limit the range of the frequency used for phase tracking.|
 
 **Example** 
 
@@ -251,8 +251,8 @@ Sets the amplifier target phase.
 |||
 |-|-|
 |Command|`setPHASE[phase]\n`|
-|Required| phase=[integer], phase in degrees|
-|Notes|No return is given if amplifier target phase is not set, use the get phase command to check. Values larger than 180 or less than -180 will be ignored|
+|Required| Phase=[integer], phase in degrees|
+|Notes|No return is given if amplifier target phase is not set, use the **Get Target Phase** command to check. Values larger than 180 or less than -180 will be ignored|
 
 **Example** 
 
@@ -271,8 +271,8 @@ Sets the maximum power applied to the load.
 |||
 |-|-|
 |Command|`setMAXLPOW[power]\n`|
-|Required| power=[integer], power in mW|
-|Notes|No return is given if max load power is not set, use the get max load power command to check. Values larger than 210000 or less than 0 will be ignored| 
+|Required| Power=[integer], power in mW|
+|Notes|No return is given if max load power is not set, use the **Get Maximum Load Power** command to check. Values larger than 210000 or less than 0 will be ignored| 
 
 **Example** 
 
@@ -291,8 +291,8 @@ Sets the target power applied to the load.
 |||
 |-|-|
 |Command|`setTARPOW[power]\n`|
-|Required| power=[integer], power in mW|
-|Notes|No return is given if target power is not set, use the get target power command to check. Values larger than max load power or less than 0 will be ignored| 
+|Required| Power=[integer], power in mW|
+|Notes|No return is given if target power is not set, use the **Get Target Load Power** command to check. Values larger than max load power or less than 0 will be ignored| 
 
 **Example** 
 
@@ -311,8 +311,8 @@ Sets the control gain used for phase tracking.
 |||
 |-|-|
 |Command|`setPHASEGAIN[phase gain]\n`|
-|Required| phase gain=[integer] |
-|Notes|No return is given if phase gain is not set, use the get phase gain command to check. Values are 1000 times less than what is displayed in the desktop software. High values may result instability| 
+|Required| Phase gain=[integer] |
+|Notes|No return is given if phase gain is not set, use the **Get Phase Gain** command to check. High values may result instability| 
 
 **Example** 
 
@@ -330,8 +330,8 @@ Sets the control gain used for power tracking.
 |||
 |-|-|
 |Command|`setPOWERGAIN[power gain]\n`|
-|Required| power gain=[integer] |
-|Notes|No return is given if power gain is not set, use the get power gain command to check. Values are 1000 times less than what is displayed in the desktop software. High values may result instability| 
+|Required| Power gain=[integer] |
+|Notes|No return is given if power gain is not set, use the **Get Power Gain** command to check. High values may result instability| 
 
 **Example** 
 
@@ -345,12 +345,12 @@ Check response.
 ___
 ## Get Control Parameters
 ### **Get Output Voltage**
-Returns the set amplifier output voltage. 
+Returns the amplifier output voltage. 
 
 |||
 |-|-|
 |Command|`getVOLT\n`|
-|Returns|peak to peak voltage in volts|
+|Returns|peak to peak voltage in V|
 
 **Example**
 send: `getVOLT\n`
@@ -358,12 +358,12 @@ send: `getVOLT\n`
 receive: `100\n`
 ____
 ### **Get Output Frequency**
-Returns the set amplifier output frequency. 
+Returns the amplifier output frequency. 
 
 |||
 |-|-|
 |Command|`getFREQ\n`|
-|Returns|frequency in hertz|
+|Returns|Frequency in Hz|
 
 **Example**
 
@@ -372,12 +372,12 @@ send: `getFREQ\n`
 receive: `80000\n`
 ____
 ### **Get Maximum Frequency**
-Returns the set amplifier maximum output frequency. 
+Returns the amplifier maximum output frequency. 
 
 |||
 |-|-|
 |Command|`getMAXFREQ\n`|
-|Returns|maximum frequency in hertz|
+|Returns|Maximum frequency in Hz|
 
 **Example**
 
@@ -386,12 +386,12 @@ send: `getMAXFREQ\n`
 receive: `90000\n`
 ____
 ### **Get Minimum Frequency**
-Returns the set amplifier minimum output frequency.
+Returns the amplifier minimum output frequency.
 
 |||
 |-|-|
 |Command|`getMINFREQ\n`|
-|Returns|minimum frequency in hertz|
+|Returns|Minimum frequency in Hz|
 
 **Example**
 
@@ -400,12 +400,12 @@ send: `getMINFREQ\n`
 receive: `70000\n`
 ____
 ### **Get Target Phase**
-Returns the set target phase.
+Returns the target phase.
 
 |||
 |-|-|
 |Command|`getPHASE\n`|
-|Returns|phase in degrees|
+|Returns|Phase in degrees|
 
 **Example**
 
@@ -414,12 +414,12 @@ send: `getPHASE\n`
 receive: `-10\n`
 ____
 ### **Get Maximum Load Power**
-Returns the set maximum load power. 
+Returns the maximum load power. 
 
 |||
 |-|-|
 |Command|`getMAXLPOW\n`|
-|Returns|power in mW|
+|Returns|Power in mW|
 
 **Example**
 
@@ -428,12 +428,12 @@ send: `getMAXLPOW\n`
 receive: `100000\n`
 ____
 ### **Get Target Load Power**
-Returns the set target load power. 
+Returns the target load power. 
 
 |||
 |-|-|
 |Command|`getTARPOW\n`|
-|Returns|power in mW|
+|Returns|Power in mW|
 
 **Example**
 
@@ -442,12 +442,12 @@ send: `getTARPOW\n`
 receive: `90000\n`
 ____
 ### **Get Phase Gain**
-Returns the set phase tracking control gain. 
+Returns the phase tracking control gain. 
 
 |||
 |-|-|
 |Command|`getPHASEGAIN\n`|
-|Returns|gain, desktop software value / 1000|
+|Returns|Gain|
 
 **Example**
 
@@ -461,7 +461,7 @@ Returns the set power tracking control gain.
 |||
 |-|-|
 |Command|`getPOWERGAIN\n`|
-|Returns|gain, desktop software value / 1000|
+|Returns|Gain|
 
 **Example**
 
@@ -491,7 +491,7 @@ Returns the measured impedance.
 |||
 |-|-|
 |Command|`readIMP\n`|
-|Returns|impedance in ohms|
+|Returns|Load impedance in ohms|
 
 **Example**
 
@@ -505,7 +505,7 @@ Returns the measured load power.
 |||
 |-|-|
 |Command|`readLPOW\n`|
-|Returns|power in mW|
+|Returns|Power in mW|
 
 **Example**
 
@@ -514,12 +514,12 @@ send: `readLPOW\n`
 receive: `91230\n`
 ____
 ### Read Amplifier Power
-Returns the measured amount of power dissipated via the amplifier.
+Returns power dissipated via the amplifier.
 
 |||
 |-|-|
 |Command|`readAPOW\n`|
-|Returns|power in mW|
+|Returns|Power in mW|
 
 **Example**
 
@@ -545,7 +545,7 @@ receive: `42\n`
 
 ### Communication Error
 
-Error will occurs when corrupted commands are sent to amplifier via RS485. It is suggested to resend the command if this error occurs.
+Error will occur when corrupted commands are sent to the amplifier via RS485. It is suggested to resend the command.
 
 |||
 |-|-|
@@ -554,7 +554,7 @@ ____
 
 ### Load Overload Error
 
-Error will occurs when measured load power exceeds the set load power value. Is sent 10 times at 100 ms intervals to insure it is received. Is reset via the enable amplifier command. 
+Error will occur when load power exceeds the set load power value. Is sent 10 times at 100 ms intervals to insure it is received. Is reset via the **Enable** command. 
 
 |||
 |-|-|
@@ -571,7 +571,7 @@ send: `ENABLE\n`
 ____
 ### Amplifier Overload Error
 
-Error will occurs when measured amplifier dissipation power exceeds set value. Is sent 10 times at 100 ms intervals to insure it is received. Is reset via the enable amplifier command. 
+Error will occur when amplifier dissipation power exceeds set value. Is sent 10 times at 100 ms intervals to insure it is received. Is reset via the **Enable** command. 
 
 |||
 |-|-|
@@ -588,7 +588,7 @@ send: `ENABLE\n`
 ___
 ### Amplifier Temperature Error
 
-Error will occurs when measured amplifier temperature exceeds set value. Is sent 10 times at 100 ms intervals to insure it is received. Is reset via the enable amplifier command. 
+Error will occur when amplifier temperature exceeds set value. Is sent 10 times at 100 ms intervals to insure it is received. Is reset via the **Enable** command. 
 
 |||
 |-|-|
