@@ -112,6 +112,42 @@ send: `isPOWER\r`
 
 Check response.
 ____
+### **Enable Current Tracking**
+Enable current tracking.
+
+|||
+|-|-|
+|Command|`enCURRENT\r`| 
+|Notes|No return is given if current tracking is not enabled, use the **Is Current Tracking** command to check.|
+
+**Example** 
+
+send: `enCURRENT\r`
+
+wait: 100 ms
+
+send: `isCURRENT\r`
+
+Check response.
+____
+### **Disable Power Tracking**
+Disable current tracking.
+
+|||
+|-|-|
+|Command|`disCURRENT\r`| 
+|Notes|No return is given if current tracking is not disabled, use the **Is Current Tracking** command to check.|
+
+**Example** 
+
+send: `disCURRENT\r`
+
+wait: 100 ms
+
+send: `isCURRENT\r`
+
+Check response.
+____
 ### **Save Parameters**
 Save current parameters to permanent storage.
 
@@ -167,6 +203,22 @@ send: `isPOWER\r`
 
 receive: `TRUE\r`
 ____
+
+### **Is Current Tracking**
+Queries if current tracking is enabled.
+
+|||
+|-|-|
+|Command|`isCURRENT\r`|
+|Returns|`TRUE\r` or `FALSE\r`|
+
+**Example** 
+
+send: `isCURRENT\r`
+
+receive: `TRUE\r`
+____
+
 
 ## Set Control Parameters
 ### **Set Output Voltage**
@@ -305,6 +357,26 @@ send: `getTARPOW\r`
 Check response.
 ___
 
+### **Set Current Power**
+Sets the target current magnitude.
+
+|||
+|-|-|
+|Command|`setCURRENT[current]\r`|
+|Required| Power=[integer], current in mA|
+|Notes|No return is given if target power is not set, use the **Get Current** command to check. Values larger than 20000 mA or less than 0 will be ignored| 
+
+**Example** 
+
+send: `setCURRENT1000\r`
+
+wait: 100 ms
+
+send: `getCURRENT\r`
+
+Check response.
+___
+
 ### **Set Phase Gain**
 Sets the control gain used for phase tracking.
 
@@ -340,6 +412,25 @@ send: `setPOWERGAIN100\r`
 wait: 100 ms
 
 send: `getPOWERGAIN\r`
+
+Check response.
+___
+### **Set Current Gain**
+Sets the control gain used for current tracking.
+
+|||
+|-|-|
+|Command|`setCURRENTGAIN[power gain]\r`|
+|Required| Power gain=[integer] |
+|Notes|No return is given if current gain is not set, use the **Get Power Gain** command to check. High values may result instability| 
+
+**Example** 
+
+send: `setCURRENTGAIN1000\r`
+
+wait: 100 ms
+
+send: `getCURRENTGAIN\r`
 
 Check response.
 ___
@@ -469,6 +560,20 @@ send: `getPOWERGAIN\r`
 
 receive: `200\r`
 ____
+### **Get Current**
+Returns the set current. 
+
+|||
+|-|-|
+|Command|`getCURRENT\r`|
+|Returns|Current in mA|
+
+**Example**
+
+send: `getCURRENT\r`
+
+receive: `1000\r`
+____
 
 ## Read Measured Values
 ### Read Measured Phase
@@ -526,6 +631,20 @@ Returns power dissipated via the amplifier.
 send: `readAPOW\r`
 
 receive: `111230\r`
+___
+### Read Current
+Returns measured current magnitude.
+
+|||
+|-|-|
+|Command|`readCURRENT\r`|
+|Returns|Current in mA|
+
+**Example**
+
+send: `readCURRENT\r`
+
+receive: `1033\r`
 ___
 ### Read Amplifier Temperature
 Returns the measured amplifier temperature.
