@@ -1,5 +1,6 @@
 import serial
 import time
+import math
 
 port = 'COM7' # You will need to change this
 
@@ -73,6 +74,13 @@ Update('enPHASE', 'isPHASE', 'TRUE')
 
 #ENABLE 
 Update('ENABLE', 'isENABLE', 'TRUE')
-time.sleep(10)
+
+ramp = 0
+while True:
+    Update('setVOLT' + str(ramp), 'getVOLT', ''+ str(ramp))
+    ramp = ramp + 1
+    if ramp > 20:
+         ramp = 0
+
 Update('DISABLE', 'isENABLE', 'FALSE')
 ser.close()
