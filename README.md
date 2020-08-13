@@ -1,6 +1,13 @@
 # RS485 API for PiezoDrive PDUS210
 
-All commands and returns will use `\r` as a termination key. 
+## Version 300000 firmware or higher
+
+* All commands except for getSTATE and getSTATEWAVE and returns will use `\r` as a termination key. 
+
+* getSTATE will return a buffer that is 80 bytes.
+* getSTATEWAVE will return a buffer that is 2080 bytes.
+* Baud rates of 9600, 115200, 460800, 921600 are selectable through the desktop software, with the default being 9600. It is recommended that 921600 is used if using the getSTATEWAVE command.
+* Allow 2.5 ms between commands
 
 ## Operational Commands 
 ### **Enable**
@@ -9,17 +16,13 @@ Enables the amplifier output.
 |||
 |-|-|
 |Command|`ENABLE\r`|
-|Notes|No return is given if amplifier will not enable, use the **Is Enabled** command to check. Clears overload errors.|
+|Notes|Will return the new value. Clears overload errors.|
 
 **Example** 
 
 send: `ENABLE\r`
 
-wait: 100 ms
-
-send: `isENABLE\r`
-
-Check response.
+read: `TRUE\r`
 ____
 ### **Disable**
 
@@ -28,35 +31,26 @@ Disable the amplifier output.
 |||
 |-|-|
 |Command|`DISABLE\r`|
-|Notes|No return is given if amplifier will not disable, use the **Is Enabled** command to check.|
+|Notes|Will return the new value.|
 
 **Example** 
 
 send: `DISABLE\r`
 
-wait: 100 ms
-
-send: `isENABLE\r`
-
-Check response.
-____
+read: `FALSE\r`
 ### **Enable Phase Tracking**
 Enables phase tracking.
 
 |||
 |-|-|
 |Command|`enPHASE\r`| 
-|Notes|No return is given if phase tracking is not enabled, use the **Is Phase Tracking** command to check.|
+|Notes|New value is returned.|
 
 **Example** 
 
 send: `enPHASE\r`
 
-wait: 100 ms
-
-send: `isPHASE\r`
-
-Check response.
+read: `TRUE\r`
 ____
 ### **Disable Phase Tracking**
 Disables phase tracking.
@@ -64,17 +58,13 @@ Disables phase tracking.
 |||
 |-|-|
 |Command|`disPHASE\r`| 
-|Notes|No return is given if phase tracking is not disabled, use the **Is Phase Tracking** command to check.|
+|Notes|New value is returned.|
 
 **Example** 
 
 send: `disPHASE\r`
 
-wait: 100 ms
-
-send: `isPHASE\r`
-
-Check response.
+read: `FALSE\r`
 ____
 ### **Enable Power Tracking**
 Enable power tracking.
@@ -82,17 +72,13 @@ Enable power tracking.
 |||
 |-|-|
 |Command|`enPOWER\r`| 
-|Notes|No return is given if power tracking is not enabled, use the **Is Power Tracking** command to check.|
+|Notes|New value is returned. Disables current tracking.|
 
 **Example** 
 
 send: `enPOWER\r`
 
-wait: 100 ms
-
-send: `isPOWER\r`
-
-Check response.
+read: `TRUE\r`
 ____
 ### **Disable Power Tracking**
 Disable power tracking.
@@ -100,17 +86,13 @@ Disable power tracking.
 |||
 |-|-|
 |Command|`disPOWER\r`| 
-|Notes|No return is given if power tracking is not disabled, use the **Is Power Tracking** command to check.|
+|Notes|New value is returned.|
 
 **Example** 
 
 send: `disPOWER\r`
 
-wait: 100 ms
-
-send: `isPOWER\r`
-
-Check response.
+read: `FALSE\r`
 ____
 ### **Enable Current Tracking**
 Enable current tracking.
@@ -118,17 +100,13 @@ Enable current tracking.
 |||
 |-|-|
 |Command|`enCURRENT\r`| 
-|Notes|No return is given if current tracking is not enabled, use the **Is Current Tracking** command to check.|
+|Notes|New value is returned. Disables power tracking.|
 
 **Example** 
 
 send: `enCURRENT\r`
 
-wait: 100 ms
-
-send: `isCURRENT\r`
-
-Check response.
+read: `TRUE\r`
 ____
 ### **Disable Power Tracking**
 Disable current tracking.
@@ -136,17 +114,13 @@ Disable current tracking.
 |||
 |-|-|
 |Command|`disCURRENT\r`| 
-|Notes|No return is given if current tracking is not disabled, use the **Is Current Tracking** command to check.|
+|Notes|New value is returned.|
 
 **Example** 
 
 send: `disCURRENT\r`
 
-wait: 100 ms
-
-send: `isCURRENT\r`
-
-Check response.
+read: `FALSE\r`
 ____
 ### **Save Parameters**
 Save current parameters to permanent storage.
@@ -154,11 +128,13 @@ Save current parameters to permanent storage.
 |||
 |-|-|
 |Command|`SAVE\r`|
-|Notes|The red led will flash slower when saving.|
+|Notes|Returns `TRUE\r` when complete|
 
 **Example** 
 
 send: `SAVE\r`
+
+read: `TRUE\r`
 
 ## Operational Queries
 ### **Is Enabled**
@@ -228,17 +204,13 @@ Sets the amplifier output voltage.
 |-|-|
 |Command|`setVOLT[voltage]\r`|
 |Required| Voltage=[integer], peak to peak voltage in volts|
-|Notes|No return is given if amplifier voltage is not set, use the **Get Output Voltage** command to check. **Note** Output voltage can't be changed while power tracking is enabled.|
+|Notes|New value is returned. Clipped between 0 and the maximum voltage output. **Note** Output voltage can't be changed while power tracking or current tracking is enabled.|
 
 **Example** 
 
 send: `setVOLT100\r`
 
-wait: 100 ms
-
-send: `getVOLT\r`
-
-Check response.
+read: `100\r`
 ____
 ### **Set Output Frequency**
 Sets the amplifier output frequency. 
@@ -247,17 +219,13 @@ Sets the amplifier output frequency.
 |-|-|
 |Command|`setFREQ[frequency]\r`|
 |Required| Frequency=[integer], frequency in Hz|
-|Notes|No return is given if amplifier frequency is not set, use the **Get Output Frequency** command to check. Will not update if phase tracking is enabled.|
+|Notes|New value is returned. Clipped between the minimum and maximum frequency. Will not update if phase tracking is enabled.|
 
 **Example** 
 
 send: `setFREQ50000\r`
 
-wait: 100 ms
-
-send: `getFREQ\r`
-
-Check response.
+read: `50000\r`
 ____
 ### **Set Maximum Output Frequency**
 Sets the amplifier maximum output frequency.
@@ -266,17 +234,13 @@ Sets the amplifier maximum output frequency.
 |-|-|
 |Command|`setMAXFREQ[frequency]\r`|
 |Required| Frequency=[integer], frequency in Hz|
-|Notes|No return is given if amplifier maximum frequency is not set, use the **Get Maximum Frequency** command to check. Will limit the range of the frequency used for phase tracking.|
+|Notes|New value is returned. Clipped between the minimum frequency and 520000 Hz. Will limit the range of the frequency used for phase tracking.|
 
 **Example** 
 
 send: `setMAXFREQ55000\r`
 
-wait: 100 ms
-
-send: `getMAXFREQ\r`
-
-Check response.
+read: `55000\r`
 ____
 ### **Set Minimum Output Frequency**
 Sets the amplifier minimum output frequency.
@@ -285,17 +249,14 @@ Sets the amplifier minimum output frequency.
 |-|-|
 |Command|`setMINFREQ[frequency]\r`|
 |Required| Frequency=[integer], frequency in Hz|
-|Notes|No return is given if amplifier minimum frequency is not set, use the **Get Minimum Frequency** command to check. Will limit the range of the frequency used for phase tracking.|
+|Notes|New value is returned. Clipped between 5400 Hz and the maximum frequency. Will limit the range of the frequency used for phase tracking.|
 
 **Example** 
 
 send: `setMINFREQ45000\r`
 
-wait: 100 ms
+read: `45000\r`
 
-send: `getMINFREQ\r`
-
-Check response.
 ____
 ### **Set Target Phase**
 Sets the amplifier target phase.
@@ -304,17 +265,13 @@ Sets the amplifier target phase.
 |-|-|
 |Command|`setPHASE[phase]\r`|
 |Required| Phase=[integer], phase in degrees|
-|Notes|No return is given if amplifier target phase is not set, use the **Get Target Phase** command to check. Values larger than 180 or less than -180 will be ignored|
+|Notes|New value is returned. Clipped between -180 and 180|
 
 **Example** 
 
 send: `setPHASE-10\r`
 
-wait: 100 ms
-
-send: `getPHASE\r`
-
-Check response.
+read: `-10\r`
 ___
 
 ### **Set Maximum Load Power**
@@ -324,17 +281,14 @@ Sets the maximum power applied to the load.
 |-|-|
 |Command|`setMAXLPOW[power]\r`|
 |Required| Power=[integer], power in mW|
-|Notes|No return is given if max load power is not set, use the **Get Maximum Load Power** command to check. Values larger than 210000 or less than 0 will be ignored| 
+|Notes|New value is returned. Clipped between 0 and 210000 mW| 
 
 **Example** 
 
 send: `setMAXLPOW100000\r`
 
-wait: 100 ms
+read: `100000\r`
 
-send: `getMAXLPOW\r`
-
-Check response.
 ___
 
 ### **Set Target Power**
@@ -344,37 +298,31 @@ Sets the target power applied to the load.
 |-|-|
 |Command|`setTARPOW[power]\r`|
 |Required| Power=[integer], power in mW|
-|Notes|No return is given if target power is not set, use the **Get Target Load Power** command to check. Values larger than max load power or less than 0 will be ignored| 
+|Notes|New value is returned. Clipped between 0 and maximum load power| 
 
 **Example** 
 
 send: `setTARPOW90000\r`
 
-wait: 100 ms
+read: `90000\r`
 
-send: `getTARPOW\r`
-
-Check response.
 ___
 
-### **Set Current Power**
+### **Set Target Current**
 Sets the target current magnitude.
 
 |||
 |-|-|
 |Command|`setCURRENT[current]\r`|
 |Required| Power=[integer], current in mA|
-|Notes|No return is given if target power is not set, use the **Get Current** command to check. Values larger than 20000 mA or less than 0 will be ignored| 
+|Notes|New value is returned. Clipped between 0 and 20000 mA| 
 
 **Example** 
 
 send: `setCURRENT1000\r`
 
-wait: 100 ms
+read: `1000\r`
 
-send: `getCURRENT\r`
-
-Check response.
 ___
 
 ### **Set Phase Gain**
@@ -384,17 +332,13 @@ Sets the control gain used for phase tracking.
 |-|-|
 |Command|`setPHASEGAIN[phase gain]\r`|
 |Required| Phase gain=[integer] |
-|Notes|No return is given if phase gain is not set, use the **Get Phase Gain** command to check. High values may result instability| 
+|Notes|New value is returned. Clipped between -100000 and 100000| 
 
 **Example** 
 
 send: `setPHASEGAIN1000\r`
 
-wait: 100 ms
-
-send: `getPHASEGAIN\r`
-
-Check response.
+read: `1000\r`
 ___
 ### **Set Power Gain**
 Sets the control gain used for power tracking.
@@ -403,17 +347,14 @@ Sets the control gain used for power tracking.
 |-|-|
 |Command|`setPOWERGAIN[power gain]\r`|
 |Required| Power gain=[integer] |
-|Notes|No return is given if power gain is not set, use the **Get Power Gain** command to check. High values may result instability| 
+|Notes|New value is returned. Clipped between 0 and 100000| 
 
 **Example** 
 
 send: `setPOWERGAIN100\r`
 
-wait: 100 ms
+read: `100\r`
 
-send: `getPOWERGAIN\r`
-
-Check response.
 ___
 ### **Set Current Gain**
 Sets the control gain used for current tracking.
@@ -422,15 +363,13 @@ Sets the control gain used for current tracking.
 |-|-|
 |Command|`setCURRENTGAIN[power gain]\r`|
 |Required| Power gain=[integer] |
-|Notes|No return is given if current gain is not set, use the **Get Power Gain** command to check. High values may result instability| 
+|Notes|New value is returned. Clipped between 0and 100000| 
 
 **Example** 
 
 send: `setCURRENTGAIN1000\r`
 
-wait: 100 ms
-
-send: `getCURRENTGAIN\r`
+read: `1000\r`
 
 Check response.
 ___
@@ -662,6 +601,7 @@ receive: `42\r`
 
 ## Errors
 
+
 ### Communication Error
 
 Error will occur when corrupted commands are sent to the amplifier via RS485. It is suggested to resend the command.
@@ -721,4 +661,109 @@ receive: `ATERR\r`
 wait: 2 s 
 
 send: `ENABLE\r`
+___
 
+### Disable Error Reporting
+
+Disables the reporting of the load overload, amplifier overload and temperature overload errors. To used when using the **getSTATE** command to monitor for errors. Returns TRUE when updated. See examples: 
+* sweep_example.py
+* state_example.py
+* gui_example.py 
+
+|||
+|-|-|
+|Command|`disERROR\r`|
+
+**Example**
+
+send: `disERROR\r`
+
+receive: `TRUE\r`
+____
+## Get Amplifier state
+
+### Get state 
+Returns the current state of the amplifier as a buffer. See examples:
+* sweep_example.py
+* state_example.py
+
+|||
+|-|-|
+|Command|`getSTATE\r`|
+|Returns|Buffer 80 bytes long|
+
+#### structure
+
+In order as shown in table
+|Type|Name|Units|
+|-|-|-|
+|char|enabled||
+|char|power tracking||
+|char|current tracking||
+|char|powerTracking||
+|char|error amp||
+|char|error load||
+|char|error temperature|| 
+|float|voltage|V peak-peak |
+|float|frequency|Hz| 
+|float|min frequency|Hz| 
+|float|max frequency|Hz|
+|float|target phase|Deg|
+|float|phase control gain||
+|float|target current|mA|
+|float|current control gain| 
+|float|target power|W|
+|float|power control gain||
+|float|max load power|W|
+|float|amplifier power|W|
+|float|load power|W|
+|float|temperature|C|
+|float|measured phase|Deg|
+|float|measured current|mA peak|
+|float|impedance|Ohms|
+|float|transformer turns||
+
+___
+
+### Get state with waveform
+Returns the current state of the amplifier and voltage and current waveforms as a buffer. See examples:
+* gui_example.py
+
+|||
+|-|-|
+|Command|`getSTATEWAVE\r`|
+|Returns|Buffer 2080 bytes long|
+
+#### structure
+
+In order as shown in table
+|Type|Name|Units|
+|-|-|-|
+|char|enabled||
+|char|power tracking||
+|char|current tracking||
+|char|powerTracking||
+|char|error amp||
+|char|error load||
+|char|error temperature|| 
+|float|voltage|V peak-peak |
+|float|frequency|Hz| 
+|float|min frequency|Hz| 
+|float|max frequency|Hz|
+|float|target phase|Deg|
+|float|phase control gain||
+|float|target current|mA|
+|float|current control gain| 
+|float|target power|W|
+|float|power control gain||
+|float|max load power|W|
+|float|amplifier power|W|
+|float|load power|W|
+|float|temperature|C|
+|float|measured phase|Deg|
+|float|measured current|mA peak|
+|float|impedance|Ohms|
+|float|transformer turns||
+|float[250]|voltage waveform|V|
+|float[250]|current waveform|A|
+___
