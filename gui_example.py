@@ -53,7 +53,7 @@ class AmpliferState:
 
 class App(QDialog):
 
-    def __init__(self):
+    def __init__(self, argv):
         super().__init__()
         self.title = 'PDus210 - RS485 Example'
         self.left = 100
@@ -69,6 +69,7 @@ class App(QDialog):
         self.time2 = [0]
         self.numberOfSamples = 1000
         self.reconnect = True
+        print(argv)
         
     def initUI(self): #Setup GUI
         self.setWindowTitle(self.title)
@@ -165,8 +166,8 @@ class App(QDialog):
                 error = True
                 self.errorValue.setText('Temperature Overload')
 
-        except:
-            print('Error 2')
+        except Exception as e:
+            print(e)
             error = True
             self.reconnect = True
             self.errorValue.setText('Communication')
@@ -494,6 +495,6 @@ class App(QDialog):
  
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = App()
+    ex = App(sys.argv)
     sys.exit(app.exec_())
 

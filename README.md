@@ -704,6 +704,7 @@ In order as shown in table
 |char|error amp||
 |char|error load||
 |char|error temperature|| 
+|char|padding|| 
 |float|voltage|V peak-peak |
 |float|frequency|Hz| 
 |float|min frequency|Hz| 
@@ -746,6 +747,7 @@ In order as shown in table
 |char|error amp||
 |char|error load||
 |char|error temperature|| 
+|char|padding|| 
 |float|voltage|V peak-peak |
 |float|frequency|Hz| 
 |float|min frequency|Hz| 
