@@ -330,13 +330,13 @@ Sets the control gain used for phase tracking.
 
 |||
 |-|-|
-|Command|`setPHASEGAIN[phase gain]\r`|
+|Command|`setGAINPHASE[phase gain]\r`|
 |Required| Phase gain=[integer] |
 |Notes|New value is returned. Clipped between -100000 and 100000| 
 
 **Example** 
 
-send: `setPHASEGAIN1000\r`
+send: `setGAINPHASE1000\r`
 
 read: `1000\r`
 ___
@@ -345,13 +345,13 @@ Sets the control gain used for power tracking.
 
 |||
 |-|-|
-|Command|`setPOWERGAIN[power gain]\r`|
+|Command|`setGAINPOWER[power gain]\r`|
 |Required| Power gain=[integer] |
 |Notes|New value is returned. Clipped between 0 and 100000| 
 
 **Example** 
 
-send: `setPOWERGAIN100\r`
+send: `setGAINPOWER100\r`
 
 read: `100\r`
 
@@ -361,13 +361,13 @@ Sets the control gain used for current tracking.
 
 |||
 |-|-|
-|Command|`setCURRENTGAIN[power gain]\r`|
+|Command|`setGAINCURRENT[power gain]\r`|
 |Required| Power gain=[integer] |
 |Notes|New value is returned. Clipped between 0and 100000| 
 
 **Example** 
 
-send: `setCURRENTGAIN1000\r`
+send: `setGAINCURRENT1000\r`
 
 read: `1000\r`
 
