@@ -122,11 +122,45 @@ send: `disCURRENT\r`
 
 read: `FALSE\r`
 ____
+### **Disable Frequency Wrapping**
+Disables frequency wrapping when phase tracking is enabled.
+
+|||
+|-|-|
+|Command|`disWRAP\r`| 
+|Notes|New value is returned.|
+
+**Example** 
+
+send: `disWRAP\r`
+
+read: `FALSE\r`
+____
+### **Enable Frequency Wrapping**
+Enables frequency wrapping when phase tracking is enabled.
+
+|||
+|-|-|
+|Command|`enWRAP\r`| 
+|Notes|New value is returned.|
+
+**Example** 
+
+send: `enWRAP\r`
+
+read: `ENABLE\r`
+____
 ### **Save Parameters**
 Save current parameters to permanent storage.
 
 |||
 |-|-|
+### **Save Parameters**
+Save current parameters to permanent storage.
+
+|||
+|-|-|
+
 |Command|`SAVE\r`|
 |Notes|Returns `TRUE\r` when complete|
 
@@ -191,6 +225,21 @@ Queries if current tracking is enabled.
 **Example** 
 
 send: `isCURRENT\r`
+
+receive: `TRUE\r`
+____
+
+### **Is Frequency Wrapping**
+Queries if frequency wrapping is enabled.
+
+|||
+|-|-|
+|Command|`isWRAP\r`|
+|Returns|`TRUE\r` or `FALSE\r`|
+
+**Example** 
+
+send: `isWRAP\r`
 
 receive: `TRUE\r`
 ____
