@@ -818,3 +818,48 @@ In order as shown in table
 |float[250]|voltage waveform|V|
 |float[250]|current waveform|A|
 ___
+### Get state with waveform raw
+Returns the current state of the amplifier and the raw voltage and current waveforms as a buffer. The waveform buffer consists of interleaved current and voltage values, which will need to be scaled. See examples:
+* gui_example_raw_wave.py
+* raw_wave_example.py
+
+
+|||
+|-|-|
+|Command|`getSTATERAW\r`|
+|Returns|Buffer 8080 bytes long|
+
+#### structure
+
+In order as shown in table
+|Type|Name|Units|
+|-|-|-|
+|char|enabled||
+|char|power tracking||
+|char|current tracking||
+|char|powerTracking||
+|char|error amp||
+|char|error load||
+|char|error temperature|| 
+|char|padding|| 
+|float|voltage|V peak-peak |
+|float|frequency|Hz| 
+|float|min frequency|Hz| 
+|float|max frequency|Hz|
+|float|target phase|Deg|
+|float|phase control gain||
+|float|target current|mA|
+|float|current control gain| 
+|float|target power|W|
+|float|power control gain||
+|float|max load power|W|
+|float|amplifier power|W|
+|float|load power|W|
+|float|temperature|C|
+|float|measured phase|Deg|
+|float|measured current|mA peak|
+|float|impedance|Ohms|
+|float|transformer turns||
+|unsigned short[2000]|Waveform Buffer|12 bit value (4096 max)|
+
+___

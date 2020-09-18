@@ -7,6 +7,7 @@ import pyqtgraph as pg
 import serial
 from struct import *
 import numpy as np
+import math
 
 port = 'COM4'  # You will need to change this
 
@@ -43,13 +44,42 @@ class AmpliferState:
         self.measuredCurrent = float(unpack('f', data[68:72])[0])
         self.Impedance = float(unpack('f', data[72:76])[0])
         self.transformerTruns = float(unpack('f', data[76:80])[0])
+        self.voltageWaveRaw = []
+        self.currentWaveRaw = []
+
+        ### Get raw buffers and calculate average
+        triggerTolerance = 2
+        averageVoltage = 0.0
+        averageCurrent = 0.0
+        voltageRange = 57.4
+        currentRange = 56.9
+        levels = 4095
+        sampleRate = 5142857.14286
+        self.triggerPostion = 0
+        averageLength = round(math.floor(1000.0*self.frequency/sampleRate)*(sampleRate/self.frequency))
+       
+        for i in range(1, 1000):
+            self.voltageWaveRaw.append(int(unpack('H', data[80+(i*4):82+(i*4)])[0]))
+            if (i < averageLength):
+                averageVoltage = averageVoltage + self.voltageWaveRaw[i-1]
+            self.currentWaveRaw.append(int(unpack('H', data[82+(i*4):84+(i*4)])[0]))
+            if (i < averageLength):
+                averageCurrent= averageCurrent + self.currentWaveRaw[i-1]
+
+        ### Remove DC offset, scale and trigger
+        averageVoltage = averageVoltage/averageLength
+        averageCurrent = averageCurrent/averageLength
+
         self.voltageWave = []
-        for i in range(0,250):
-            self.voltageWave.append(float(unpack('f',data[80+(i*4):84+(i*4)])[0]))
         self.currentWave = []
-        for i in range(250,500):
-            self.currentWave.append(float(unpack('f',data[80+(i*4):84+(i*4)])[0]))
-        self.voltage = self.voltage*self.transformerTruns
+
+        for i in range(0, 999):
+            self.voltageWave.append((self.voltageWaveRaw[i] - averageVoltage)*self.transformerTruns*voltageRange/levels)
+            self.currentWave.append((self.currentWaveRaw[i] - averageCurrent)*currentRange/(levels*self.transformerTruns))
+
+        for i in range(triggerTolerance, 999 - triggerTolerance):
+            if self.triggerPostion == 0 and self.voltageWave[i-triggerTolerance] < 0 and self.voltageWave[i+triggerTolerance] > 0:
+                self.triggerPostion = i
 
 class App(QDialog):
 
@@ -69,6 +99,7 @@ class App(QDialog):
         self.time2 = [0]
         self.numberOfSamples = 1000
         self.reconnect = True
+        self.triggerPostion = 0
         print(argv)
         
     def initUI(self): #Setup GUI
@@ -112,10 +143,11 @@ class App(QDialog):
                 self.errorValue.setText('Communication')
                 self.ser.flushInput()
         try: #Update amplifer state and GUI
-            self.ser.write('getSTATEWAVE\r'.encode())
-            returned = self.ser.read(2080)
+            self.ser.write('getSTATERAW\r'.encode())
+            returned = self.ser.read(8080)
             self.ser.flushInput()
             self.amp = AmpliferState(returned)
+            self.triggerPostion = self.amp.triggerPostion
             self.enableValue.setText(str(self.amp.enabled))
             self.trackingValue.setText(str(self.amp.phaseTracking))
             self.currentTrackingValue.setText(str(self.amp.currentTracking))
@@ -184,10 +216,15 @@ class App(QDialog):
             self.commands.append(command+str(int(value)))
         
     def updateWaveform(self): #Updates graphs
+        self.time = []
+        for i in range (0, 999 - self.triggerPostion):
+            self.time.append(i*0.19444444444)
+
         self.p1.clear()
-        self.p1.plot(self.time, self.amp.voltageWave)
+        self.p1.plot(self.time, self.amp.voltageWave[self.triggerPostion:])
+        self.p1.setXRange(0, 140)
         self.p2.clear()
-        self.p2.addItem(pg.PlotCurveItem(self.time, self.amp.currentWave, pen='b'))
+        self.p2.addItem(pg.PlotCurveItem(self.time, self.amp.currentWave[self.triggerPostion:], pen='b'))
         self.p2.setGeometry(self.p1.vb.sceneBoundingRect())
         self.p2.linkedViewChanged(self.p1.vb, self.p2.XAxis)   
 
