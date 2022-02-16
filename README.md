@@ -266,6 +266,21 @@ Sets the amplifier output frequency.
 
 |||
 |-|-|
+|Command|`setMAV[voltage]\r`|
+|Required| Voltage=[integer], peak to peak voltage limit in volts|
+|Notes|New value is returned. Clipped between 0 and the maximum voltage output.|
+
+**Example** 
+
+send: `setMAXV100\r`
+
+read: `100\r`
+____
+### **Set Output Frequency**
+Sets the amplifier output frequency. 
+
+|||
+|-|-|
 |Command|`setFREQ[frequency]\r`|
 |Required| Frequency=[integer], frequency in Hz|
 |Notes|New value is returned. Clipped between the minimum and maximum frequency. Will not update if phase tracking is enabled.|
@@ -433,6 +448,19 @@ Returns the amplifier output voltage.
 
 **Example**
 send: `getVOLT\r`
+
+receive: `100\r`
+____
+### **Get Output Frequency**
+Returns the amplifier output frequency. 
+
+|||
+|-|-|
+|Command|`getMAXV\r`|
+|Returns|peak to peak voltage limit in V|
+
+**Example**
+send: `getMAXV\r`
 
 receive: `100\r`
 ____
