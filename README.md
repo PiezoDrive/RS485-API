@@ -261,7 +261,7 @@ send: `setVOLT100\r`
 
 read: `100\r`
 ____
-### **Set Output Frequency**
+### **Set Voltage Limit**
 Sets the amplifier output frequency. 
 
 |||
@@ -451,7 +451,7 @@ send: `getVOLT\r`
 
 receive: `100\r`
 ____
-### **Get Output Frequency**
+### **Get Voltage Limit**
 Returns the amplifier output frequency. 
 
 |||
