@@ -452,7 +452,7 @@ send: `getVOLT\r`
 receive: `100\r`
 ____
 ### **Get Voltage Limit**
-Returns the amplifier output frequency. 
+Returns the voltage limit. 
 
 |||
 |-|-|
