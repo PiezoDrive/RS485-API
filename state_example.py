@@ -5,7 +5,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from struct import *
 
-port = 'COM4'  # You will need to change this
+port = 'COM3'  # You will need to change this
 
 ############################################################################
 #                            Get State Example                            #
@@ -59,7 +59,7 @@ while True:
     print ('Amplifier Overload: ' + str(amp.errorAmp))
     print ('Load Overload: ' + str(amp.errorLoad))
     print ('Temperature Overload: ' + str(amp.errorTemperature))
-    print ('Voltage: ' + str(amp.voltage*amp.transformerTruns))
+    print ('Voltage: ' + str(amp.voltage))
     print ('Frequency: ' + str(amp.frequency))
     print ('Max Frequency: ' + str(amp.maxFrequency))
     print ('Min Frequency: ' + str(amp.minFrequency))
@@ -74,7 +74,7 @@ while True:
     print ('Amp Power: ' + str(amp.ampliferPower))
     print ('Phase Measured: ' + str(amp.measuredPhase))
     print ('Current Measured: ' + str(amp.measuredCurrent))
-    print ('Impdance: ' + str(amp.Impedance))
+    print ('Impedance: ' + str(amp.Impedance))
     print ('Temperature: ' + str(amp.temperature))
     print ('Transformer Turns ' + str(amp.transformerTruns))
     #### Monitor for errors
@@ -87,6 +87,10 @@ while True:
     if amp.errorTemperature:
         print('Temperature Overload')
         exit()
+
+    print('\n\r')
+
+    time.sleep(0.5)
 
 
 

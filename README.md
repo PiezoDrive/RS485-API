@@ -1,6 +1,6 @@
 # RS485 API for PiezoDrive PDUS210
 
-## Version 300000 firmware or higher
+## Version 500000 firmware or higher
 
 * All commands except for getSTATE and getSTATEWAVE and returns will use `\r` as a termination key. 
 
@@ -8,6 +8,9 @@
 * getSTATEWAVE will return a buffer that is 2080 bytes.
 * Baud rates of 9600, 115200, 460800, 921600 are selectable through the desktop software, with the default being 9600. It is recommended that 921600 is used if using the getSTATEWAVE command.
 * Allow 2.5 ms between commands
+* getSTATEWAVE has been temporarily disabled
+* Starting with firmware higher than 500000 voltage and currents will be RMS
+
 
 ## Operational Commands 
 ### **Enable**
@@ -775,20 +778,20 @@ In order as shown in table
 |Type|Name|Units|
 |-|-|-|
 |char|enabled||
-|char|power tracking||
+|char|phase tracking||
 |char|current tracking||
-|char|powerTracking||
+|char|phase tracking||
 |char|error amp||
 |char|error load||
 |char|error temperature|| 
 |char|padding|| 
-|float|voltage|V peak-peak |
+|float|voltage|V RMS |
 |float|frequency|Hz| 
 |float|min frequency|Hz| 
 |float|max frequency|Hz|
 |float|target phase|Deg|
 |float|phase control gain||
-|float|target current|mA|
+|float|target current|A RMS|
 |float|current control gain| 
 |float|target power|W|
 |float|power control gain||
@@ -797,13 +800,13 @@ In order as shown in table
 |float|load power|W|
 |float|temperature|C|
 |float|measured phase|Deg|
-|float|measured current|mA peak|
+|float|measured current|A RMS|
 |float|impedance|Ohms|
 |float|transformer turns||
 
 ___
 
-### Get state with waveform
+### Get state with waveform (temporarily disabled)
 Returns the current state of the amplifier and voltage and current waveforms as a buffer. See examples:
 * gui_example.py
 
@@ -846,7 +849,7 @@ In order as shown in table
 |float[250]|voltage waveform|V|
 |float[250]|current waveform|A|
 ___
-### Get state with waveform raw
+### Get state with waveform raw (temporarily disabled)
 Returns the current state of the amplifier and the raw voltage and current waveforms as a buffer. The waveform buffer consists of interleaved current and voltage values, which will need to be scaled. See examples:
 * gui_example_raw_wave.py
 * raw_wave_example.py
