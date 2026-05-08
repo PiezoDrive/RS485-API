@@ -153,6 +153,34 @@ send: `enWRAP\r`
 
 read: `ENABLE\r`
 ____
+### **Start Sweep**
+Starts sweep function, note desktop software must be running and desired amplifier must be selected or popped out.
+
+||                        |
+|-|------------------------|
+|Command| `enSWEEP\r`            | 
+|Notes| New value is returned. |
+
+**Example** 
+
+send: `enSWEEP\r`
+
+read: `TRUE\r`
+____
+### **Stop Sweep**
+Stops sweep function, note desktop software must be running and desired amplifier must be selected or popped out.
+
+||                        |
+|-|------------------------|
+|Command| `disSWEEP\r`           | 
+|Notes| New value is returned. |
+
+**Example** 
+
+send: `disSWEEP\r`
+
+read: `FALSE\r`
+____
 ### **Save Parameters**
 Save current parameters to permanent storage.
 
@@ -247,16 +275,30 @@ send: `isWRAP\r`
 receive: `TRUE\r`
 ____
 
+### **Is Sweeping Remote**
+Queries if sweeping is under RS485 control.
+
+||                       |
+|-|-----------------------|
+|Command| `isSWEEP\r`           |
+|Returns| `TRUE\r` or `FALSE\r` |
+
+**Example** 
+
+send: `isWRAP\r`
+
+receive: `TRUE\r`
+____
 
 ## Set Control Parameters
 ### **Set Output Voltage**
 Sets the amplifier output voltage. 
 
-|||
-|-|-|
-|Command|`setVOLT[voltage]\r`|
-|Required| Voltage=[integer], peak to peak voltage in volts|
-|Notes|New value is returned. Clipped between 0 and the maximum voltage output. **Note** Output voltage can't be changed while power tracking or current tracking is enabled.|
+||                                                                                                                                                                        |
+|-|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|Command| `setVOLT[voltage]\r`                                                                                                                                                   |
+|Required| Voltage=[integer], RMS voltage in volts                                                                                                                                |
+|Notes| New value is returned. Clipped between 0 and the maximum voltage output. **Note** Output voltage can't be changed while power tracking or current tracking is enabled. |
 
 **Example** 
 
@@ -267,15 +309,15 @@ ____
 ### **Set Voltage Limit**
 Sets the amplifier output frequency. 
 
-|||
-|-|-|
-|Command|`setMAV[voltage]\r`|
-|Required| Voltage=[integer], peak to peak voltage limit in volts|
-|Notes|New value is returned. Clipped between 0 and the maximum voltage output.|
+||                                                                          |
+|-|--------------------------------------------------------------------------|
+|Command| `setMAXVOLT[voltage]\r`                                                  |
+|Required| Voltage=[integer], RMS voltage limit in volts                            |
+|Notes| New value is returned. Clipped between 0 and the maximum voltage output. |
 
 **Example** 
 
-send: `setMAXV100\r`
+send: `setMAXVOLT100\r`
 
 read: `100\r`
 ____
@@ -439,15 +481,135 @@ send: `setGAINCURRENT1000\r`
 read: `1000\r`
 
 Check response.
+## Set Sweep Parameters
+### **Set Sweep Voltage**
+Sets the sweep voltage. 
+
+|          |                                                                         |
+|----------|-------------------------------------------------------------------------|
+| Command  | `setSWEEPVOLT[voltage]\r`                                               |
+| Required | Voltage=[integer], RMS voltage in volts                                 |
+| Notes    | New value is returned. Clipped between 0 and the sweep maximum voltage. |
+
+**Example** 
+
+send: `setSWEEPVOLT100\r`
+
+read: `100\r`
+___
+### **Set Sweep Max Voltage**
+Sets the sweep max voltage. 
+
+|          |                                                                               |
+|----------|-------------------------------------------------------------------------------|
+| Command  | `setSWEEPMAXVOLT[voltage]\r`                                                  |
+| Required | Voltage=[integer], RMS voltage in volts                                       |
+| Notes    | New value is returned. Clipped between 0 and the amplifier's maximum voltage. |
+
+**Example** 
+
+send: `setSWEEPMAXVOLT100\r`
+
+read: `100\r`
+___
+
+### **Set Sweep Max Current**
+Sets the sweep max current. 
+
+|          |                                                                               |
+|----------|-------------------------------------------------------------------------------|
+| Command  | `setSWEEPMAXCURR[voltage]\r`                                                  |
+| Required | Current=[integer], RMS voltage in mA                                          |
+| Notes    | New value is returned. Clipped between 0 and the amplifier's maximum current. |
+
+**Example** 
+
+send: `setSWEEPMAXCURR100\r`
+
+read: `100\r`
+___
+## **Set Sweep Start**
+Sets the sweep start frequency. 
+
+|          |                                                                       |
+|----------|-----------------------------------------------------------------------|
+| Command  | `setSWEEPSTART[frequnecy]\r`                                          |
+| Required | frquency=[integer], frequency in Hz.                                  |
+| Notes    | New value is returned. Clipped between 5 kHz and sweep end frequency. |
+
+**Example** 
+
+send: `setSWEEPSTART10000\r`
+
+read: `10000\r`
+___
+## **Set Sweep End**
+Sets the sweep end frequency. 
+
+|          |                                                                                     |
+|----------|-------------------------------------------------------------------------------------|
+| Command  | `setSWEEPEND[frequnecy]\r`                                                          |
+| Required | frquency=[integer], frequency in Hz.                                                |
+| Notes    | New value is returned. Clipped between sweep start frequency and sweep end 200 kHz. |
+
+**Example** 
+
+send: `setSWEEPEND10000\r`
+
+read: `10000\r`
+___
+## **Set Sweep Average**
+Sets the sweep average count.
+
+|          |                                   |
+|----------|-----------------------------------|
+| Command  | `setSWEEPAVG[counts]\r`           |
+| Required | counts=[integer], average counts. |
+| Notes    |                                   |
+
+**Example** 
+
+send: `setSWEEPAVG10\r`
+
+read: `10\r`
+## **Set Sweep Wait**
+Sets the sweep settle time. 
+
+|          |                             |
+|----------|-----------------------------|
+| Command  | `setSWEEPWAIT[time]\r`      |
+| Required | time=[integer], time in ms. |
+| Notes    |                             |
+
+**Example** 
+
+send: `setSWEEPWAIT10\r`
+
+read: `10\r`
+___
+## **Set Sweep Step**
+Sets the sweep step frequency. 
+
+|          |                             |
+|----------|-----------------------------|
+| Command  | `setSWEEPSTEP[step]\r`      |
+| Required | step=[integer], step in Hz. |
+| Notes    |                             |
+
+**Example** 
+
+send: `setSWEEPSTEP100\r`
+
+read: `100\r`
 ___
 ## Get Control Parameters
 ### **Get Output Voltage**
 Returns the amplifier output voltage. 
 
-|||
-|-|-|
-|Command|`getVOLT\r`|
-|Returns|peak to peak voltage in V|
+||                  |
+|-|------------------|
+|Command| `getVOLT\r`      |
+|Returns| RMS voltage in V |
 
 **Example**
 send: `getVOLT\r`
@@ -457,10 +619,10 @@ ____
 ### **Get Voltage Limit**
 Returns the voltage limit. 
 
-|||
-|-|-|
-|Command|`getMAXV\r`|
-|Returns|peak to peak voltage limit in V|
+||                        |
+|-|------------------------|
+|Command| `getMAXV\r`            |
+|Returns| RMS voltage limit in V |
 
 **Example**
 send: `getMAXV\r`
@@ -593,7 +755,111 @@ send: `getCURRENT\r`
 
 receive: `1000\r`
 ____
+## Get Sweep Parameters
+### **Get Sweep Voltage**
+Returns the sweep voltage. 
 
+||                  |
+|-|------------------|
+|Command| `getSWEEPVOLT\r` |
+|Returns| RMS voltage in V |
+
+**Example**
+send: `getSWEEPVOLT\r`
+
+receive: `100\r`
+____
+### **Get Sweep Max Voltage**
+Returns the sweep max voltage. 
+
+||                     |
+|-|---------------------|
+|Command| `getSWEEPMAXVOLT\r` |
+|Returns| RMS voltage in V    |
+
+**Example**
+send: `getSWEEPMAXVOLT\r`
+
+receive: `100\r`
+____
+### **Get Sweep Max Current**
+Returns the sweep max current. 
+
+|         |                      |
+|---------|----------------------|
+| Command | `getSWWEEPMAXCURR\r` |
+| Returns | RMS current in mA    |
+
+**Example**
+send: `getSWEEPMAXCURR\r`
+
+receive: `100\r`
+____
+### **Get Sweep Start**
+Returns the sweep start frequency. 
+
+|         |                   |
+|---------|-------------------|
+| Command | `getSWEEPSTART\r` |
+| Returns | frequnecy in Hz   |
+
+**Example**
+send: `getSWEEPSTART\r`
+
+receive: `10000\r`
+____
+### **Get Sweep End**
+Returns the sweep end frequency.
+
+|         |                 |
+|---------|-----------------|
+| Command | `getSWEEPEND\r` |
+| Returns | frequnecy in Hz |
+
+**Example**
+send: `getSWEEPEND\r`
+
+receive: `10000\r`
+____
+### **Get Sweep Average**
+Returns the sweep average count.
+
+|         |                 |
+|---------|-----------------|
+| Command | `getSWEEPAVG\r` |
+| Returns | count           |
+
+**Example**
+send: `getSWEEPAVG\r`
+
+receive: `10\r`
+____
+### **Get Sweep Wait**
+Returns the sweep settle time.
+
+|         |                  |
+|---------|------------------|
+| Command | `getSWEEPWAIT\r` |
+| Returns | time in ms       |
+
+**Example**
+send: `getSWEEPWAIT\r`
+
+receive: `10\r`
+____
+### **Get Sweep Step**
+Returns the sweep step frequency.
+
+|         |                  |
+|---------|------------------|
+| Command | `getSWEEPSTEP\r` |
+| Returns | step in Hz       |
+
+**Example**
+send: `getSWEEPSTEP\r`
+
+receive: `10\r`
+____
 ## Read Measured Values
 ### Read Measured Phase
 Returns the measured phase.

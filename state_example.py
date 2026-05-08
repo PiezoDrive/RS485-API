@@ -5,7 +5,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from struct import *
 
-port = 'COM3'  # You will need to change this
+port = 'COM7'  # You will need to change this
 
 ############################################################################
 #                            Get State Example                            #
@@ -43,8 +43,8 @@ class AmpliferState:
 
 ser = serial.Serial(port=port, baudrate=921600, timeout=1)
 #### Disable Error reporting, monitor amplifier state
-ser.write('disERROR\r'.encode())
-ser.read_until('\r'.encode())
+#ser.write('disERROR\r'.encode())
+#ser.read_until('\r'.encode())
 while True:
     # Get state
     ser.write('getSTATE\r'.encode())
@@ -90,7 +90,7 @@ while True:
 
     print('\n\r')
 
-    time.sleep(0.5)
+    time.sleep(0.01)
 
 
 
