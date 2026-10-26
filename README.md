@@ -1008,6 +1008,23 @@ wait: 2 s
 
 send: `ENABLE\r`
 ___
+### Amplifier Temperature Error
+
+Error will occur when the amplifier's power supply goes into overcurrent protection. Is sent 10 times at 100 ms intervals to insure it is received. Is reset via the **Enable** command. 
+
+|||
+|-|-|
+|Message|`PSERR\r`|
+|Reset|`ENABLE\r`|
+
+**Example**
+
+receive: `PSERR\r`
+
+wait: 2 s 
+
+send: `ENABLE\r`
+___
 
 ### Disable Error Reporting
 
