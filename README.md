@@ -1008,7 +1008,7 @@ wait: 2 s
 
 send: `ENABLE\r`
 ___
-### Amplifier Temperature Error
+### Amplifier Power Supply Error
 
 Error will occur when the amplifier's power supply goes into overcurrent protection. Is sent 10 times at 100 ms intervals to insure it is received. Is reset via the **Enable** command. 
 
